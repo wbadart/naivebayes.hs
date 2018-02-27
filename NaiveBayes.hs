@@ -1,10 +1,12 @@
-{- Main.hs
+{- NaiveBayes.hs
  -
  - Implement a Naive Bayes machine learning model in Haskell.
  -
  - Will Badart
  - created: FEB 2018
  -}
+
+module NaiveBayes (classify) where
 
 import Data.Function (on)
 import Data.List (genericLength, maximumBy, nub)

@@ -6,24 +6,10 @@
  - created: FEB 2018
  -}
 
-module NaiveBayes (classify) where
+module NaiveBayes (classify, splitBy) where
 
 import Data.Function (on)
 import Data.List (genericLength, maximumBy, nub)
-import System.IO (getLine, readFile)
-
-
-main = do
-    content <- readFile "weather.csv"
-    let split = splitBy (==',')
-        rows = map split $ lines content
-
-    putStr "instance> "
-    line <- getLine
-
-    let tup = split  line
-    print $ classify rows tup
-    main
 
 
 splitBy :: (Char -> Bool) -> String -> [String]

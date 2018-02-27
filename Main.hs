@@ -24,10 +24,8 @@ main = do
 
 
 wordsWhen :: (Char -> Bool) -> String -> [String]
-wordsWhen p s =  case dropWhile p s of
-                      "" -> []
-                      s' -> w : wordsWhen p s''
-                        where (w, s'') = break p s'
+wordsWhen p "" = []
+wordsWhen p s = let (w, s') = break p s in w:wordsWhen p s'
 
 
 classify :: [[String]] -> [String] -> String

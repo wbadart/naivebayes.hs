@@ -6,26 +6,29 @@
  - created: FEB 2018
  -}
 
+import Control.Monad (when)
 import Data.Function (on)
 import Data.List (genericLength, maximumBy, nub)
 import System.Environment (getArgs)
-import System.IO (readFile)
+import System.IO (getLine, readFile)
 
 
 main = do
     content <- readFile "weather.csv"
-    let rows = map (wordsWhen (==',')) $ lines content
-        tup = ["rainy", "hot", "high", "false"]
-    putStrLn $ show (probability 0 "sunny" "yes" rows)
-    putStrLn $ show (labelprob rows tup "yes")
-    putStrLn $ show (labelprob rows tup "no")
-    putStrLn $ show (classify rows tup)
-    return ()
+    let rows = map (splitBy (==',')) $ lines content
+
+    putStr "instance> "
+    line <- getLine
+
+    let tup = splitBy (==',')  line
+    print $ classify rows tup
+    main
 
 
-wordsWhen :: (Char -> Bool) -> String -> [String]
-wordsWhen p "" = []
-wordsWhen p s = let (w, s') = break p s in w:wordsWhen p s'
+splitBy :: (Char -> Bool) -> String -> [String]
+splitBy p = foldr f [[]]
+    where f c l@(x:xs) | p c = []:l
+                       | otherwise = (c:x):xs
 
 
 classify :: [[String]] -> [String] -> String

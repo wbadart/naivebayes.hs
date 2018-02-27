@@ -13,9 +13,9 @@ import Data.List (genericLength, maximumBy, nub)
 
 
 splitBy :: (Char -> Bool) -> String -> [String]
-splitBy p = foldr f [[]]
-    where f c l@(x:xs) | p c = []:l
-                       | otherwise = (c:x):xs
+splitBy p = foldr f [""]
+    where f c l@(str:strs) | p c = []:l
+                           | otherwise = (c:str):strs
 
 
 countBy :: Num i => (a -> Bool) -> [a] -> i

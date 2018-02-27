@@ -25,7 +25,8 @@ countBy p = genericLength . filter p
 classify :: [[String]] -> [String] -> String
 classify data_ tup =
     let labels = nub $ map last data_
-    in maximumBy (compare `on` (labelProb data_ tup)) labels
+        prob = labelProb data_ tup
+    in maximumBy (compare `on` prob) labels
 
 
 labelProb :: [[String]] -> [String] -> String -> Double

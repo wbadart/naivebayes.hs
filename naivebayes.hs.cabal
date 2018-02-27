@@ -1,0 +1,17 @@
+Name:           NaiveBayes
+Version:        1.0.0a0
+Cabal-Version:  >= 2.0.0.1
+License:        MIT
+License-File:   LICENSE
+Author:         Will Badart
+Homepage:       https://github.com/wbadart/naivebayes.hs
+Synopsis:       Implements the Naive Bayes machine learning model
+
+Library
+    Build-Depends:  base
+    Exposed-modules:
+        NaiveBayes
+
+Executable interactnb
+    Build-Depends:  NaiveBayes
+    Main-Is:        Main.hs

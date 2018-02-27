@@ -7,11 +7,18 @@
  -}
 
 import NaiveBayes (classify, splitBy)
+import System.Environment (getArgs)
 import System.IO (getLine, readFile)
 
 
 main = do
-    content <- readFile "weather.csv"
+    args <- getArgs
+    let fname = if length args >= 1
+                then args !! 0 else "weather.csv"
+
+    putStrLn $ "Using training set from " ++ fname
+
+    content <- readFile fname
     let split = splitBy (==',')
         rows = map split $ lines content
 

@@ -8,7 +8,8 @@
 
 import NaiveBayes (classify, splitBy)
 import System.Environment (getArgs)
-import System.IO (getLine, readFile)
+import System.IO (
+    BufferMode(NoBuffering), getLine, hSetBuffering, readFile, stdout)
 
 
 main = do
@@ -18,13 +19,20 @@ main = do
 
     putStrLn $ "Using training set from " ++ fname
 
+    hSetBuffering stdout NoBuffering
+
     content <- readFile fname
     let split = splitBy (==',')
         rows = map split $ lines content
 
-    putStr "instance> "
-    line <- getLine
+    let loop = do
 
-    let tup = split  line
-    print $ classify rows tup
-    main
+        putStr "instance> "
+        line <- getLine
+
+        let tup = split  line
+        print $ classify rows tup
+
+        loop
+
+    loop

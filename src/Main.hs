@@ -6,16 +6,22 @@
  - created: FEB 2018
  -}
 
-import NaiveBayes (classify, splitBy)
 import System.Environment (getArgs)
 import System.IO (
     BufferMode(NoBuffering), getLine, hSetBuffering, readFile, stdout)
 
+import NaiveBayes (classify, splitBy)
+
+
+splitBy :: (Char -> Bool) -> String -> [String]
+splitBy p = foldr f [[]]
+    where f c l@(x:xs) | p c = []:l
+                       | otherwise = (c:x):xs
 
 main = do
     args <- getArgs
-    let fname = if length args >= 1
-                then args !! 0 else "weather.csv"
+    let fname = if not $ null args
+                then head args else "weather.csv"
 
     putStrLn $ "Using training set from " ++ fname
 

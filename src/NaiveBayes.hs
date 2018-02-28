@@ -6,16 +6,10 @@
  - created: FEB 2018
  -}
 
-module NaiveBayes (classify, splitBy) where
+module NaiveBayes (classify) where
 
 import Data.Function (on)
 import Data.List (genericLength, maximumBy, nub)
-
-
-splitBy :: (Char -> Bool) -> String -> [String]
-splitBy p = foldr f [[]]
-    where f c l@(x:xs) | p c = []:l
-                       | otherwise = (c:x):xs
 
 
 countBy :: Num i => (a -> Bool) -> [a] -> i
@@ -25,14 +19,15 @@ countBy p = genericLength . filter p
 classify :: [[String]] -> [String] -> String
 classify data_ tup =
     let labels = nub $ map last data_
-    in maximumBy (compare `on` (labelProb data_ tup)) labels
+    in maximumBy (compare `on` labelProb data_ tup) labels
 
 
 labelProb :: [[String]] -> [String] -> String -> Double
 labelProb data_ tup label =
     let label_ct = countBy ((==label) . last) data_
         prior_prob = label_ct / genericLength data_
-    in prior_prob * product [probability ft val label data_ | (ft, val) <- zip [0..] tup]
+    in prior_prob * product [probability ft val label data_
+                            | (ft, val) <- zip [0..] tup]
 
 
 probability :: Int -> String -> String -> [[String]] -> Double

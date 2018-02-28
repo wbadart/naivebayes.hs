@@ -8,8 +8,8 @@ Small implementation of a Naive Bayes model in Haskell
 `naivebayes.hs` has no dependencies outside of the standard library, so it can
 be installed simply as follows:
 
-    $ git clone https://github.com/wbadart/naivebayes.hs
-    $ cabal install naivebayes.hs.cabal
+    $ git clone https://github.com/wbadart/naivebayes.hs \
+        && cabal install naivebayes.hs
 
 
 ## Usage

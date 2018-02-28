@@ -15,12 +15,11 @@ import Data.List (genericLength, maximumBy, nub)
 countBy :: Num i => (a -> Bool) -> [a] -> i
 countBy p = genericLength . filter p
 
-
 classify :: [[String]] -> [String] -> String
 classify data_ tup =
     let labels = nub $ map last data_
-    in maximumBy (compare `on` labelProb data_ tup) labels
-
+        prob = labelProb data_ tup
+    in maximumBy (compare `on` prob) labels
 
 labelProb :: [[String]] -> [String] -> String -> Double
 labelProb data_ tup label =
@@ -28,7 +27,6 @@ labelProb data_ tup label =
         prior_prob = label_ct / genericLength data_
     in prior_prob * product [probability ft val label data_
                             | (ft, val) <- zip [0..] tup]
-
 
 probability :: Int -> String -> String -> [[String]] -> Double
 probability feature value label data_ =
